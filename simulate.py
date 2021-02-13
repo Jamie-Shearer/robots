@@ -1,4 +1,6 @@
 # This will be the file that simulates the world in which our robots will run
+# Just as a side note, .urdf stands for "Unified Robot Description Format"
+# Seems pretty sus
 
 import pybullet as p
 import pybullet_data
@@ -9,8 +11,9 @@ p.setAdditionalSearchPath(pybullet_data.getDataPath())  # Make sure we can find 
 
 # Create environment
 p.setGravity(0, 0, -9.8)                # Obviously, sets gravity to simulate the real world
-planeId = p.loadURDF("plane.urdf")      # Make the ground be a flat plane
-p.loadSDF("boxes.sdf")                  # Load in the file created by generate.py
+planeId = p.loadURDF("plane.urdf")
+bodyId = p.loadURDF("body.urdf")
+p.loadSDF("World.sdf")                  # Load in the file created by generate.py
 
 # Keep the environment around for a bit, also walk through time
 for i in range(1000):       # Moves time forward in the physics engine by a small amount
