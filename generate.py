@@ -4,9 +4,6 @@
 import pybullet as p
 import pyrosim.pyrosim as pyrosim
 
-# This will tell pyrosim where to store info
-# This world will be called box because it will contain a single box
-pyrosim.Start_SDF("boxes.sdf")
 
 # Initialize variables to dictate size of box
 length = 1
@@ -14,32 +11,64 @@ width = 1
 height = 1
 
 # Initialize position variables
+# Eventually I know I need to move these into a local scope
 x = 0
 y = 0
 z = 0.5
 
-# A loop that generates towers of boxes in a 6x6 grid
-for k in range(6):              # Each iteration of this creates a row of towers
-    for j in range(6):          # Each iteration of this creates a tower and moves position to next tower
-        for i in range(10):     # Each iteration of this creates the next block and resizes
-            pyrosim.Send_Cube(name="Box", pos=[x, y, z], size=[length, width, height])  # Create block
-            z = z + 1               # Set position for next block
-            # Resize next block
-            length = length * 0.9
-            width = width * 0.9
-            height = height * 0.9
 
-        # Set the position to start the next tower
-        x = x + 1   # Move over 1
-        z = 0.5     # It would work without this but it would take forever for all the blocks to fall
+# Create_World() starts an sdf fle, sends a cube to it, and ends pyrosim
+# This is not the capitalization convention I would have used
+def Create_World():
+    # This will tell pyrosim where to store info
+    pyrosim.Start_SDF("World.sdf")
 
-        # Resize so the first block of the next tower is the right size
-        length = 1
-        width = 1
-        height = 1
+    pyrosim.Send_Cube(name="Box", pos=[x+5, y+5, z], size=[length, width, height])  # Create block
 
-    # Set the starting position of the next row of towers
-    y = y + 1
-    x = 0
+    pyrosim.End()
 
-pyrosim.End()
+
+# Create_Robot will, predictably, create a robot
+def Create_Robot():
+    # Torso coordinates
+    torso_x = 1.5
+    torso_y = 0
+    torso_z = 1.5
+
+    # Back leg coordinates
+    back_joint_x = torso_x - 0.5
+    back_joint_y = torso_y
+    back_joint_z = torso_z - 0.5
+    back_x = -0.5
+    back_y = 0
+    back_z = -0.5
+
+    # Front leg coordinates
+    front_joint_x = 2
+    front_joint_y = 0
+    front_joint_z = 1
+    front_x = 0.5
+    front_y = 0
+    front_z = -0.5
+
+    # Make the actual robot
+    pyrosim.Start_URDF("body.urdf")     # Make the body
+    pyrosim.Send_Cube(name="Torso", pos=[torso_x, torso_y, torso_z], size=[length, width, height])    # Create Torso
+
+    # Child position is relative to parent joint
+    # Back leg
+    pyrosim.Send_Joint(name="Torso_BackLeg", parent="Torso", child="BackLeg", type="revolute",
+                       position="1 0 1")
+    pyrosim.Send_Cube("BackLeg", [back_x, back_y, back_z], [length, width, height])  # Create Leg
+
+    # Front Leg
+    pyrosim.Send_Joint("Torso_FrontLeg", "Torso", "FrontLeg", "revolute",
+                       "2 0 1")
+    pyrosim.Send_Cube("FrontLeg", [front_x, front_y, front_z], [length, width, height])  # Create Leg
+
+    pyrosim.End()
+
+
+# Uncomment these if you make changes to the robot or the world
+#Create_World()
+Create_Robot()
