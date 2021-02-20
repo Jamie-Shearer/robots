@@ -2,8 +2,10 @@
 # Just as a side note, .urdf stands for "Unified Robot Description Format"
 # Seems pretty sus
 
+import numpy
 import pybullet as p
 import pybullet_data
+import pyrosim.pyrosim as pyrosim
 import time
 
 physicsClient = p.connect(p.GUI)    # Creates a physicsClient object, draws result to GUI
@@ -15,9 +17,16 @@ planeId = p.loadURDF("plane.urdf")
 bodyId = p.loadURDF("body.urdf")
 p.loadSDF("World.sdf")                  # Load in the file created by generate.py
 
+pyrosim.Prepare_To_Simulate("body.urdf")        # Do I even need a comment here?
+
 # Keep the environment around for a bit, also walk through time
-for i in range(1000):       # Moves time forward in the physics engine by a small amount
-    p.stepSimulation()      # One time step
+for i in range(100000):       # Moves time forward in the physics engine by a small amount
+    p.stepSimulation()       # One time step
+
+    # Read sensor values from the leg
+    backLegTouch = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
+    print(backLegTouch)
+
     time.sleep(1/60)        # Keep it around for a bit
 
 p.disconnect()      # Closes physicsClient
