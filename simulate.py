@@ -19,14 +19,23 @@ p.loadSDF("World.sdf")                  # Load in the file created by generate.p
 
 pyrosim.Prepare_To_Simulate("body.urdf")        # Do I even need a comment here?
 
+# Make vectors to put sensor values in
+backLegSensorValues = numpy.zeros(1000)
+frontLegSensorValues = numpy.zeros(1000)
+
 # Keep the environment around for a bit, also walk through time
-for i in range(100000):       # Moves time forward in the physics engine by a small amount
+for i in range(1000):       # Moves time forward in the physics engine by a small amount
     p.stepSimulation()       # One time step
 
-    # Read sensor values from the leg
-    backLegTouch = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
-    print(backLegTouch)
+    # Read sensor values from the legs
+    backLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("BackLeg")
+    frontLegSensorValues[i] = pyrosim.Get_Touch_Sensor_Value_For_Link("FrontLeg")
+    # print(backLegTouch)
 
     time.sleep(1/60)        # Keep it around for a bit
 
 p.disconnect()      # Closes physicsClient
+
+numpy.save("data/backLegSensorValues.npy", backLegSensorValues)
+numpy.save("data/frontLegSensorValues.npy", frontLegSensorValues)
+print(backLegSensorValues)

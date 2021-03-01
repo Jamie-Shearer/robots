@@ -36,17 +36,17 @@ def Create_Robot():
     torso_z = 1.5
 
     # Back leg coordinates
-    back_joint_x = torso_x - 0.5
-    back_joint_y = torso_y
-    back_joint_z = torso_z - 0.5
+    # back joint x = 1
+    # back joint y = 0
+    # back joint z = 1
     back_x = -0.5
     back_y = 0
     back_z = -0.5
 
     # Front leg coordinates
-    front_joint_x = 2
-    front_joint_y = 0
-    front_joint_z = 1
+    # front joint x = 2
+    # front joint y = 0
+    # front joint z = 1
     front_x = 0.5
     front_y = 0
     front_z = -0.5
