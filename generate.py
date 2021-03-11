@@ -1,7 +1,6 @@
 # Create a bunch of objects
 # This then puts an SDF file in the directory containing that object
 
-import pybullet as p
 import pyrosim.pyrosim as pyrosim
 
 
@@ -19,7 +18,7 @@ z = 0.5
 
 # Create_World() starts an sdf fle, sends a cube to it, and ends pyrosim
 # This is not the capitalization convention I would have used
-def Create_World():
+def Generate_World():
     # This will tell pyrosim where to store info
     pyrosim.Start_SDF("World.sdf")
 
@@ -29,7 +28,7 @@ def Create_World():
 
 
 # Create_Robot will, predictably, create a robot
-def Create_Robot():
+def Generate_Body():
     # Torso coordinates
     torso_x = 1.5
     torso_y = 0
@@ -69,6 +68,21 @@ def Create_Robot():
     pyrosim.End()
 
 
+def Generate_Brain():
+    # Make the Brian.
+    pyrosim.Start_NeuralNetwork("brain.nndf")     # Make the body
+
+    pyrosim.Send_Sensor_Neuron(name=0, linkName="Torso")
+    pyrosim.Send_Sensor_Neuron(1, "BackLeg")
+    pyrosim.Send_Sensor_Neuron(2, "FrontLeg")
+
+    pyrosim.Send_Motor_Neuron(3, "Torso_BackLeg")
+    pyrosim.Send_Motor_Neuron(4, "Torso_FrontLeg")
+
+    pyrosim.End()
+
+
 # Uncomment these if you make changes to the robot or the world
-#Create_World()
-Create_Robot()
+# Generate_World()
+# Generate_Body()
+Generate_Brain()

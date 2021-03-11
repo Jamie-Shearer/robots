@@ -10,6 +10,3 @@ class SENSOR:
 
     def Get_Value(self, t):     # t will be the current time step
         self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
-
-    def Save_Values(self, output):
-        np.save(output, self.values)
