@@ -2,6 +2,7 @@
 # This then puts an SDF file in the directory containing that object
 
 import pyrosim.pyrosim as pyrosim
+import random
 
 
 # Initialize variables to dictate size of box
@@ -78,6 +79,10 @@ def Generate_Brain():
 
     pyrosim.Send_Motor_Neuron(3, "Torso_BackLeg")
     pyrosim.Send_Motor_Neuron(4, "Torso_FrontLeg")
+
+    for i in range(3):
+        for j in range(3, 5):
+            pyrosim.Send_Synapse(sourceNeuronName=i, targetNeuronName=j, weight=random.uniform(-1.0, 1.0))
 
     pyrosim.End()
 

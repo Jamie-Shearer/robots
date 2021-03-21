@@ -1,7 +1,7 @@
 import numpy as np
 
 # Initializing variables
-lentime = 3000     # Number of time steps simulation will run for
+lentime = 1000     # Number of time steps simulation will run for
 
 # Back leg values
 backLegAmplitude = np.pi / 4
