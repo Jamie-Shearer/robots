@@ -6,10 +6,14 @@ import constants as c
 
 
 class SIMULATION:
-    def __init__(self):
+    def __init__(self, directOrGUI):
+        # Create environment
+        if directOrGUI.upper() == "GUI":
+            p.connect(p.GUI)
+        else:
+            p.connect(p.DIRECT)
         self.world = WORLD()
         self.robot = ROBOT()
-        # Create environment
         p.setGravity(0, 0, -9.8)
 
     def Run(self):
@@ -19,6 +23,9 @@ class SIMULATION:
             self.robot.Think()
             self.robot.Act(i)
             time.sleep(1/240)
+
+    def Get_Fitness(self):
+        self.robot.Get_Fitness()
 
     def __del__(self):
         p.disconnect()  # Closes physicsClient
