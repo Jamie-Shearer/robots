@@ -4,24 +4,51 @@ from pyrosim import pyrosim
 import constants as c
 import os
 import random
+import time
 
 
 class SOLUTION:
-    def __init__(self):
+    def __init__(self, ID):
+        self.myID = ID
         self.weights = np.random.rand(3, 2)     # Create a 3x2 matrix of weights
         self.weights = self.weights * 2 - 1     # This puts the values in [-1, 1]
 
-    def Evaluate(self, directOrGUI):
+    # This function was split into two smaller functions
+    # def Evaluate(self, directOrGUI):
+    #     self.Create_World()
+    #     self.Create_Body()
+    #     self.Create_Brain()
+    #     self.command = str("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
+    #     # print(self.command)
+    #     os.system(self.command)
+    #
+    #     # Read in the fitness value from the fitness file
+    #     fitnessFileName = str("fitness" + str(self.myID) + ".txt")
+    #     while not os.path.exists(fitnessFileName):      # This will wait for the file to actually be created
+    #         time.sleep(0.01)
+    #
+    #     f = open(fitnessFileName, "r")
+    #     self.fitness = float(f.read())
+    #     f.close()
+
+    def Start_Simulation(self, directOrGUI):
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
-        self.command = str("python3 simulate.py " + directOrGUI)
+        self.command = str("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")
+        # print(self.command)
         os.system(self.command)
 
+    def Wait_For_Simulation_To_End(self):
         # Read in the fitness value from the fitness file
-        f = open("fitness.txt", "r")
+        fitnessFileName = str("fitness" + str(self.myID) + ".txt")
+        while not os.path.exists(fitnessFileName):  # This will wait for the file to actually be created
+            time.sleep(0.01)
+
+        f = open(fitnessFileName, "r")
         self.fitness = float(f.read())
         f.close()
+        os.system("rm " + fitnessFileName)
 
     def Create_World(self):
         # This will tell pyrosim where to store info
@@ -53,8 +80,10 @@ class SOLUTION:
         pyrosim.End()
 
     def Create_Brain(self):
-        # Make the Brian.
-        pyrosim.Start_NeuralNetwork("brain.nndf")  # Make the body
+        brainname = "brain" + str(self.myID) + ".nndf"       # This will make the name of the brain be brainID.nndf
+        # print("Brain name:", brainname)
+        # Make the Brian's brain.
+        pyrosim.Start_NeuralNetwork(brainname)  # Make the neural network
 
         pyrosim.Send_Sensor_Neuron(name=0, linkName="Torso")
         pyrosim.Send_Sensor_Neuron(1, "BackLeg")
@@ -75,3 +104,6 @@ class SOLUTION:
         random_row = random.randint(0, 2)       # Choose a random row in self.weights
         random_column = random.randint(0, 1)    # Choose a random column in self.weights
         self.weights[random_row][random_column] = random.random() * 2 - 1
+
+    def Set_ID(self, newID):
+        self.myID = newID

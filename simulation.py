@@ -6,14 +6,15 @@ import constants as c
 
 
 class SIMULATION:
-    def __init__(self, directOrGUI):
+    def __init__(self, directOrGUI, solutionID):
         # Create environment
-        if directOrGUI.upper() == "GUI":
+        self.directOrGUI = directOrGUI
+        if self.directOrGUI.upper() == "GUI":
             p.connect(p.GUI)
         else:
             p.connect(p.DIRECT)
         self.world = WORLD()
-        self.robot = ROBOT()
+        self.robot = ROBOT(solutionID)
         p.setGravity(0, 0, -9.8)
 
     def Run(self):
@@ -22,7 +23,8 @@ class SIMULATION:
             self.robot.Sense(i)
             self.robot.Think()
             self.robot.Act(i)
-            time.sleep(1/240)
+            if self.directOrGUI.upper() == "GUI":
+                time.sleep(1/240)
 
     def Get_Fitness(self):
         self.robot.Get_Fitness()
