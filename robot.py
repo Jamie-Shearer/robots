@@ -46,14 +46,15 @@ class ROBOT:
         self.nn.Update()
 
     def Get_Fitness(self):
-        stateOfLinkZero = p.getLinkState(self.robot, 0)
-        positionOfLinkZero = stateOfLinkZero[0]
-        xCoordinateOfLinkZero = positionOfLinkZero[0]
+        # Get the position of the back leg
+        basePositionAndOrientation = p.getBasePositionAndOrientation(self.robot)
+        basePosition = basePositionAndOrientation[0]
+        yPosition = basePosition[1]
 
         # Write the fitness value to the file
         # Right now fitness value is just how far the robot traveled to the right (We want the most negative number)
         f = open("tmp" + self.solutionID + ".txt", "w")
-        f.write(str(xCoordinateOfLinkZero))
+        f.write(str(yPosition))
         f.close()
 
         os.system("mv tmp" + str(self.solutionID) + ".txt fitness" + str(self.solutionID) + ".txt")
