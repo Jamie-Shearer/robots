@@ -17,7 +17,6 @@ frontLegPhaseOffset = 0
 length = 1
 width = 1
 height = 1
-#
 legLength = 0.2
 legWidth = 1
 
@@ -49,7 +48,7 @@ front_y = 0.5
 front_z = 0
 
 # Number of generations
-numberOfGenerations = 10
+numberOfGenerations = 1
 
 # Population size
 populationSize = 1

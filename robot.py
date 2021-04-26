@@ -13,7 +13,7 @@ class ROBOT:
         self.sensors = {}
         self.motors = {}
         self.robot = p.loadURDF("body.urdf")
-        pyrosim.Prepare_To_Simulate("body.urdf")        # Do I even need a comment here?
+        pyrosim.Prepare_To_Simulate(self.robot)        # Do I even need a comment here?
         self.Prepare_To_Sense()
         self.Prepare_To_Act()
         self.nn = NEURAL_NETWORK("brain" + str(self.solutionID) + ".nndf")
@@ -22,6 +22,7 @@ class ROBOT:
     def Sense(self, t):
         for linkName in self.sensors:
             self.sensors[linkName].Get_Value(t)
+            # print(linkName)
 
     def Prepare_To_Sense(self):  # I hate this
         for linkName in pyrosim.linkNamesToIndices:
@@ -30,6 +31,7 @@ class ROBOT:
     def Prepare_To_Act(self):
         for jointName in pyrosim.jointNamesToIndices:
             self.motors[jointName] = MOTOR(jointName)
+        # print("ROBOT line 34------------", self.motors)
 
     def Act(self, t):
         for neuronName in self.nn.Get_Neuron_Names():
