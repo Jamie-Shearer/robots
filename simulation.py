@@ -21,10 +21,16 @@ class SIMULATION:
         for i in range(c.lentime):  # Moves time forward in the physics engine by a small amount
             p.stepSimulation()
             self.robot.Sense(i)
+            # Just stop the robot when the torso touches the ground
+            print(self.robot.sensors["Torso"].values[i])
+            if self.robot.sensors["Torso"].values[i] != 1.0:
+                break
             self.robot.Think()
             self.robot.Act(i)
             if self.directOrGUI.upper() == "GUI":
                 time.sleep(1/240)
+
+
 
     def Get_Fitness(self):
         self.robot.Get_Fitness()

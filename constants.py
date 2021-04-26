@@ -49,10 +49,10 @@ front_y = 0.5
 front_z = 0
 
 # Number of generations
-numberOfGenerations = 50
+numberOfGenerations = 10
 
 # Population size
-populationSize = 10
+populationSize = 1
 
 # Yeah homie idk
 numSensorNeurons = 7

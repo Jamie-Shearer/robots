@@ -62,7 +62,13 @@ class PARALLEL_HILL_CLIMBER:
             if self.parents[parent].fitness < lowest:
                 lowest = self.parents[parent].fitness
                 fittest = self.parents[parent]
-        fittest.Start_Simulation("GUI")
+
+        # Here's a little thing because I don't wanna have to watch the whole thing.
+        showme = input("Show the best one? (y/n)\n")
+        if showme.lower() == "n":
+            exit()
+        else:
+            fittest.Start_Simulation("GUI")
         print("\n\n-----------------------------------------------")
         print("Best fitness:", lowest)
         print("-----------------------------------------------\n\n")
@@ -70,7 +76,7 @@ class PARALLEL_HILL_CLIMBER:
     def Evaluate(self, solutions):
         for solution in solutions:     # Run all the simulations
             # self.parents[parent].Evaluate("GUI")
-            solutions[solution].Start_Simulation("DIRECT")
+            solutions[solution].Start_Simulation("GUI")     # TODO: DIRECT!!!!!!!!!!!!!!!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         for solution in solutions:     # Collect the fitness values
             solutions[solution].Wait_For_Simulation_To_End()
