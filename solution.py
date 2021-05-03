@@ -17,7 +17,7 @@ class SOLUTION:
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
-        self.command = str("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")  #TODO: 2&>1
+        self.command = str("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")  #TODO: 2&>1
         # print(self.command)
         os.system(self.command)
 

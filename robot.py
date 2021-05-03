@@ -19,10 +19,10 @@ class ROBOT:
         self.nn = NEURAL_NETWORK("brain" + str(self.solutionID) + ".nndf")
         os.system("rm brain" + str(self.solutionID) + ".nndf")
 
-    def Sense(self, t):
+    def Sense(self, t):     # Not the problem
         for linkName in self.sensors:
             self.sensors[linkName].Get_Value(t)
-            # print(linkName)
+            # print("robot.py line 25 ------------------------------------\n", linkName)
 
     def Prepare_To_Sense(self):  # I hate this
         for linkName in pyrosim.linkNamesToIndices:

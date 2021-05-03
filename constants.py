@@ -1,7 +1,7 @@
 import numpy as np
 
 # Initializing variables
-lentime = 1000     # Number of time steps simulation will run for
+lentime = 5000     # Number of time steps simulation will run for
 
 # Back leg values
 backLegAmplitude = np.pi / 4
@@ -48,12 +48,12 @@ front_y = 0.5
 front_z = 0
 
 # Number of generations
-numberOfGenerations = 1
+numberOfGenerations = 70
 
 # Population size
-populationSize = 1
+populationSize = 10
 
-# Yeah homie idk
+# Number of sensor and motor neurons
 numSensorNeurons = 7
 numMotorNeurons = 6
 
