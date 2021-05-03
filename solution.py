@@ -17,7 +17,7 @@ class SOLUTION:
         self.Create_World()
         self.Create_Body()
         self.Create_Brain()
-        self.command = str("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " &")  #TODO: 2&>1
+        self.command = str("python3 simulate.py " + directOrGUI + " " + str(self.myID) + " 2&>1 &")  #TODO: 2&>1
         # print(self.command)
         os.system(self.command)
 
@@ -81,11 +81,11 @@ class SOLUTION:
                            "-0.5 0 4", "1 1 0")
         pyrosim.Send_Cube("LeftArm", [0, 0, -0.5], [0.2, 0.2, 1])
 
-        # Right Arm
-        # Joint positions are absolute
-        pyrosim.Send_Joint("Torso_RightArm", "Torso", "RightArm", "revolute",
-                           "0.5 0 4", "1 1 0")
-        pyrosim.Send_Cube("RightArm", [0, 0, -0.5], [0.2, 0.2, 1])
+        # # Right Arm
+        # # Joint positions are absolute
+        # pyrosim.Send_Joint("Torso_RightArm", "Torso", "RightArm", "revolute",
+        #                    "0.5 0 4", "1 1 0")
+        # pyrosim.Send_Cube("RightArm", [0, 0, -0.5], [0.2, 0.2, 1])
 
         pyrosim.End()
 
@@ -101,14 +101,14 @@ class SOLUTION:
         pyrosim.Send_Sensor_Neuron(3, "RightLowerLeg")
         pyrosim.Send_Sensor_Neuron(4, "LeftLowerLeg")
         pyrosim.Send_Sensor_Neuron(5, "LeftArm")
-        pyrosim.Send_Sensor_Neuron(6, "RightArm")
+        # pyrosim.Send_Sensor_Neuron(6, "RightArm")
 
-        pyrosim.Send_Motor_Neuron(7, "Torso_LeftLeg")
-        pyrosim.Send_Motor_Neuron(8, "Torso_RightLeg")
-        pyrosim.Send_Motor_Neuron(9, "RightLeg_RightLowerLeg")
-        pyrosim.Send_Motor_Neuron(10, "LeftLeg_LeftLowerLeg")
-        pyrosim.Send_Motor_Neuron(11, "Torso_LeftArm")
-        pyrosim.Send_Motor_Neuron(12, "Torso_RightArm")
+        pyrosim.Send_Motor_Neuron(6, "Torso_LeftLeg")
+        pyrosim.Send_Motor_Neuron(7, "Torso_RightLeg")
+        pyrosim.Send_Motor_Neuron(8, "RightLeg_RightLowerLeg")
+        pyrosim.Send_Motor_Neuron(9, "LeftLeg_LeftLowerLeg")
+        pyrosim.Send_Motor_Neuron(10, "Torso_LeftArm")
+        # pyrosim.Send_Motor_Neuron(12, "Torso_RightArm")
 
         for currentRow in range(c.numSensorNeurons):
             for currentColumn in range(c.numMotorNeurons):

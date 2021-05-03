@@ -22,8 +22,8 @@ class SIMULATION:
             p.stepSimulation()
             self.robot.Sense(i)
             # Just stop the robot when the torso touches the ground
-            print(self.robot.sensors["Torso"].values[i])
-            if self.robot.sensors["Torso"].values[i] != -1.0:       #TODO: Make this work
+            # print(self.robot.sensors["Torso"].values[i])
+            if (self.robot.sensors["LeftArm"].values[i] != -1.0):       #TODO: Make this work
                 break
             self.robot.Think()
             self.robot.Act(i)
